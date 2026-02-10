@@ -28,6 +28,32 @@ h1 {
   user-select: none;
 }
 
+.algo-code-panel {
+  margin-bottom: 20px;
+}
+
+.algo-code-panel h2 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+}
+
+.algo-code-panel pre {
+  margin: 0;
+  padding: 12px;
+  border: 1px solid #d3d8df;
+  border-radius: 10px;
+  background: #101828;
+  color: #e4e7ec;
+  overflow-x: auto;
+}
+
+.algo-code-panel code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  white-space: pre;
+}
+
 .timeline-wrapper {
   border: 1px solid #d3d8df;
   border-radius: 10px;

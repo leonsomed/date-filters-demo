@@ -66,6 +66,56 @@ function fullyContainedAlgo(itemStart: number, itemEnd: number, rangeStart?: num
   }
 }
 
+const inclusiveOverlapAlgoCode = `function algoInclusiveOverlapJavascript(itemStart: number, itemEnd: number, rangeStart?: number, rangeEnd?: number) {
+  // Placeholder algorithm: inclusive overlap.
+  if (rangeStart !== undefined && rangeEnd !== undefined) {
+    return itemStart <= rangeEnd && itemEnd >= rangeStart
+  } else if (rangeStart !== undefined) {
+    return itemEnd >= rangeStart
+  } else if (rangeEnd !== undefined) {
+    return itemStart <= rangeEnd
+  } else {
+    return false
+  }
+}
+
+function algoInclusiveOverlapMongoDB(itemStart: number, itemEnd: number, rangeStart?: number, rangeEnd?: number) {
+  const filter = {}
+  if (rangeStart !== undefined && rangeEnd !== undefined) {
+    filter.startDate = { $lte: rangeEnd }
+    filter.endDate = { $gte: rangeStart }
+  } else if (rangeStart !== undefined) {
+    filter.endDate = { $gte: rangeStart }
+  } else if (rangeEnd !== undefined) {
+    filter.startDate = { $lte: rangeEnd }
+  }
+}`
+
+const fullyContainedAlgoCode = `function fullyContainedAlgoJavascript(itemStart: number, itemEnd: number, rangeStart?: number, rangeEnd?: number) {
+  // Placeholder algorithm: fully contained in range.
+  if (rangeStart !== undefined && rangeEnd !== undefined) {
+    return itemStart >= rangeStart && itemEnd <= rangeEnd
+  } else if (rangeStart !== undefined) {
+    return itemStart >= rangeStart
+  } else if (rangeEnd !== undefined) {
+    return itemEnd <= rangeEnd
+  } else {
+    return false
+  }
+}
+
+function fullyContainedAlgoMongoDB(itemStart: number, itemEnd: number, rangeStart?: number, rangeEnd?: number) {
+  const filter = {}
+  if (rangeStart !== undefined && rangeEnd !== undefined) {
+    filter.startDate = { $gte: rangeStart }
+    filter.endDate = { $lte: rangeEnd }
+  } else if (rangeStart !== undefined) {
+    filter.startDate = { $gte: rangeStart }
+  } else if (rangeEnd !== undefined) {
+    filter.endDate = { $lte: rangeEnd }
+  }
+}`
+
 function App() {
   const [selectedAlgorithm, setSelectedAlgorithm] = useState<'inclusive' | 'contained'>('inclusive')
   const [isStartDateOpen, setIsStartDateOpen] = useState(false)
@@ -89,6 +139,7 @@ function App() {
   const filterBarLeft = isStartDateOpen ? 0 : toPercent(filterStart)
   const filterBarRight = isEndDateOpen ? 100 : toPercent(filterEnd)
   const filterBarWidth = Math.max(filterBarRight - filterBarLeft, 0)
+  const selectedAlgoCode = selectedAlgorithm === 'inclusive' ? inclusiveOverlapAlgoCode : fullyContainedAlgoCode
 
   return (
     <main className="demo-page">
@@ -116,6 +167,8 @@ function App() {
           />
           Fully Contained Algo
         </label>
+        </section>
+        <section className="controls">
         <label>
           <input
             type="checkbox"
@@ -188,6 +241,14 @@ function App() {
             })}
           </div>
         </div>
+      </section>
+
+  <br />
+      <section className="algo-code-panel">
+        <h2>Selected algorithm implementation</h2>
+        <pre>
+          <code>{selectedAlgoCode}</code>
+        </pre>
       </section>
     </main>
   )
